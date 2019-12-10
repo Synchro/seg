@@ -3,6 +3,7 @@
 namespace Synchro\seg\Test;
 
 use Synchro\seg\Generic;
+use Synchro\seg\Base;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,11 +13,15 @@ use PHPUnit\Framework\TestCase;
  */
 class segTest extends TestCase
 {
-    /**
-     * Test the basic header class.
-     */
-    public function testBasic(): void
+    public function testGeneric(): void
     {
+        //This causes a segfault
         $a = new Generic();
+    }
+
+    public function testBase(): void
+    {
+        //This throws a warning
+        $a = new Base();
     }
 }
