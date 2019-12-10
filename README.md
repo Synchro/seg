@@ -18,6 +18,27 @@ The behavior of unparenthesized expressions containing both '.' and '+'/'-' will
  seg/tests/segTest.php:25
 ```
 
+If I change the problem line to this:
+
+    return preg_match('/^[a-z]{1,' . 74 . '}$/', $n) !== false;
+
+or this:
+
+    return preg_match('/^[a-z]{1,' . (76 - 2) . '}$/', $n) !== false;
+
+The segfault does not occur.
+
 So this is dependent on context. I have provided 2 tests - showing the difference.
 
 The warning is perhaps an indication of where the problem might be, but regardless of whether the code is iffy, it shouldn't segfault!
+
+# To run the tests
+
+```bash
+git clone https://github.com/Synchro/seg.git
+cd seg
+composer install --dev
+php vendor/bin/phpunit --no-configuration --filter "/(::testBase)( .*)?$/" Synchro\seg\Test\segTest tests/segTest.php
+php vendor/bin/phpunit --no-configuration --filter "/(::testGeneric)( .*)?$/" Synchro\seg\Test\segTest tests/segTest.php
+```
+The first run produces the warning, the second one a segfault.
